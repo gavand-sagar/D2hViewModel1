@@ -1,64 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace D2hViewModel
 {
-    internal class MainWindowViewModel : INotifyPropertyChanged
+
+    public class BaseButtonCommand : ICommand
+    {
+        Action action;
+        public BaseButtonCommand(Action action)
+        {
+            this.action = action;
+        }
+        public event EventHandler CanExecuteChanged;
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            action();
+        }
+    }
+
+
+    public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChange(string PropertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
 
+    }
 
-        private string _username; // field
-        public string Username  //Property
+    public class MainWindowViewModel : BaseViewModel
+    {
+
+        private string _username;
+        public string Username
         {
             get { return _username; }
-            set
-            {
-                _username = value;
-                if (Username.Contains("u"))
-                {
-                    Validation = "Conains U";
-                }
-                ProperteryUpdated("Username");
-            }
+            set { _username = value; OnPropertyChange(nameof(Username)); }
         }
 
 
-        private string _Validation;
-        public string Validation
+        private ObservableCollection<int> _numbers;
+        public ObservableCollection<int> Numbers
         {
-            get { return _Validation; }
-            set { _Validation = value; ProperteryUpdated("Validation"); }
+            get { return _numbers; }
+            set { _numbers = value; OnPropertyChange(nameof(Numbers)); }
         }
 
-
-
-        private string _password;
-
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; ProperteryUpdated("Password"); }
-        }
-
-
+        public ICommand LoginCommand { get; set; }
+        public ICommand SignupCommand { get; set; }
+        public ICommand GetUsersCommand { get; set; }
         public MainWindowViewModel()
         {
-            this.Username = "Sagar";
+            LoginCommand = new BaseButtonCommand(Login);
+            SignupCommand = new BaseButtonCommand(SignUp);
+            GetUsersCommand = new BaseButtonCommand(GetUsers);
         }
-
-
-        void ProperteryUpdated(string ProperyName)
+        public void Login()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(ProperyName));
-            }
+            Numbers.Add(12);
+
+            MessageBox.Show("Login");
         }
+
+        public void SignUp()
+        {
+            MessageBox.Show("Login");
+        }
+
+        public void GetUsers()
+        {
+
+        }
+
 
 
 

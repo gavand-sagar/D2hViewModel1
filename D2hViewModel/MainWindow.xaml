@@ -6,15 +6,10 @@
         xmlns:local="clr-namespace:D2hViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-    
-    </Window.Resources>
     <Grid>
-        <StackPanel>
-            <TextBox Text="{Binding Username,Source={StaticResource MainWindowViewModel}}" Height="100" Width="300"></TextBox>
-            <Label Content="{Binding Validation,Source={StaticResource MainWindowViewModel}}" Height="100" Width="300"></Label>
-            <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-            <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
+        <StackPanel Orientation="Horizontal" Height="50">
+            <Button Command="{Binding LoginCommand,Source={StaticResource MainWindowViewModel}}" Content="Login" />
+            <Button Command="{Binding SignupCommand,Source={StaticResource MainWindowViewModel}}" Content="SignUp" />
         </StackPanel>
     </Grid>
 </Window>

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,18 +23,11 @@ namespace D2hViewModel
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //var viewModel = (MainWindowViewModel)Application.Current.Resources["MainWindowViewModel"];
-
-            //viewModel.Username = "Suraj";
-
-        }
     }
 }
